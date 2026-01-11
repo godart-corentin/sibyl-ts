@@ -1,0 +1,21 @@
+# Source files
+src/
+tsconfig*.json
+.eslintrc.json
+.prettierrc.json
+.prettierignore
+
+# Tests
+**/*.spec.ts
+**/*.test.ts
+vitest.config.ts
+
+# Build config
+.github/
+.vscode/
+
+# Misc
+.DS_Store
+*.log
+coverage/
+node_modules/

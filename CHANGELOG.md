@@ -1,0 +1,19 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.0] - 2026-01-11
+
+### Added
+
+- Initial release of sibyl-ts (TypeScript validation library inspired by Psycho-Pass Sibyl System)
+- Type-safe validators: string, number, boolean, date, array, object, tuple, union, literal, enum
+- String validators: email, URL, UUID, IP address
+- Safe parsing with `tryJudge()` method
+- Comprehensive error handling with detailed error messages
+- Full TypeScript support with automatic type inference
+- Dual ESM/CommonJS module support
+- Complete test suite with vitest
