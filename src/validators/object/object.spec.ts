@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { obj } from './object';
-import { arr } from './array';
-import { str } from './string';
-import { num } from './number';
-import { bool } from './boolean';
-import { union } from './union';
+import { arr } from '../array';
+import { str } from '../string';
+import { num } from '../number';
+import { bool } from '../boolean';
+import { union } from '../union';
 
 describe.concurrent('Object validator', () => {
   it('should throw an error if the value is not an object', () => {
@@ -17,9 +17,7 @@ describe.concurrent('Object validator', () => {
   it('should throw if the object does not match the schema', () => {
     // Missing properties pass undefined to validators, which then throw their own errors
     // When multiple properties fail, we get a multi-error message
-    expect(() => obj({ a: str(), b: num() }).judge({})).toThrow(
-      'Judgment failed with 2 error(s)'
-    );
+    expect(() => obj({ a: str(), b: num() }).judge({})).toThrow('Judgment failed with 2 error(s)');
     expect(() => obj({ a: str(), b: bool() }).judge({ a: 'hello', b: 'world' })).toThrow(
       'Value is string, expected boolean'
     );
@@ -241,7 +239,7 @@ describe.concurrent('Object validator', () => {
       expect(result.type).toBe('error');
       if (result.type === 'error') {
         expect(result.issues).toHaveLength(3);
-        const paths = result.issues.map((i) => i.path).sort();
+        const paths = result.issues.map((i: { path: string }) => i.path).sort();
         expect(paths).toEqual(['active', 'age', 'name']);
       }
     });
@@ -258,7 +256,7 @@ describe.concurrent('Object validator', () => {
       expect(result.type).toBe('error');
       if (result.type === 'error') {
         expect(result.issues).toHaveLength(2);
-        const paths = result.issues.map((i) => i.path).sort();
+        const paths = result.issues.map((i: { path: string }) => i.path).sort();
         expect(paths).toEqual(['user.age', 'user.name']);
       }
     });

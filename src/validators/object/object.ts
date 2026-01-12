@@ -1,7 +1,7 @@
-import type { Validator } from '../common';
-import { withTryJudge } from '../withTryJudge';
-import { JudgmentError, type JudgmentIssue } from '../error';
-import { getValueType } from '../getValueType';
+import type { Validator } from '../../common';
+import { withTryJudge } from '../../withTryJudge';
+import { JudgmentError, type JudgmentIssue } from '../../error';
+import { getValueType } from '../../getValueType';
 
 // Extract the parsed object type from a schema
 export type InferObjectType<Schema extends Record<string, Validator>> = {
@@ -33,7 +33,7 @@ export const obj = <T extends Record<string, unknown>>(schema: {
         result: Partial<T>;
         issues: JudgmentIssue[];
       }>(
-        (acc, [key, validator]) => {
+        (acc, [key, validator]: [string, Validator<T[keyof T]>]) => {
           const inputValue = value[key as keyof typeof value];
 
           try {
