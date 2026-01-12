@@ -132,8 +132,6 @@ try {
 - `judge()` - When you want exceptions thrown (typical validation)
 - `tryJudge()` - When you want to handle errors gracefully (user input, APIs)
 
-````
-
 ### Union Types
 
 ```typescript
@@ -149,7 +147,7 @@ const dominatorModeValidator = union([
 dominatorModeValidator.judge('paralyzer'); // OK
 dominatorModeValidator.judge('eliminator'); // OK
 dominatorModeValidator.judge('stun'); // Error!
-````
+```
 
 ### Optional and Nullable
 
