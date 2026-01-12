@@ -5,3 +5,7 @@ dist
 coverage
 .DS_Store
 *.log
+
+# Playground (personal testing)
+playground/node_modules
+playground/package-lock.json

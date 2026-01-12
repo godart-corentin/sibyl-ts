@@ -1,0 +1,15 @@
+{
+  "name": "playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx playground.ts",
+    "watch": "tsx watch playground.ts"
+  },
+  "dependencies": {
+    "sibyl-ts": "file:.."
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}
