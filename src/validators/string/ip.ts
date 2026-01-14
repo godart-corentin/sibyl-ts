@@ -17,9 +17,7 @@ export const ip = (opts?: IPValidatorOptions): Validator<string> => {
     judge(value): string {
       if (typeof value !== 'string') {
         const valueType = getValueType(value);
-        throw new JudgmentError([
-          { message: `Value is ${valueType}, expected string`, path: '' },
-        ]);
+        throw new JudgmentError([{ message: `Value is ${valueType}, expected string`, path: '' }]);
       }
 
       if (opts?.version === '4' && !ipv4Regex.test(value)) {

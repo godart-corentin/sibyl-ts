@@ -8,9 +8,7 @@ export const uuid = (): Validator<string> => {
     judge(value): string {
       if (typeof value !== 'string') {
         const valueType = getValueType(value);
-        throw new JudgmentError([
-          { message: `Value is ${valueType}, expected string`, path: '' },
-        ]);
+        throw new JudgmentError([{ message: `Value is ${valueType}, expected string`, path: '' }]);
       }
 
       const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;

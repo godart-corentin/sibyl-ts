@@ -8,9 +8,7 @@ export const url = (): Validator<string> => {
     judge(value): string {
       if (typeof value !== 'string') {
         const valueType = getValueType(value);
-        throw new JudgmentError([
-          { message: `Value is ${valueType}, expected string`, path: '' },
-        ]);
+        throw new JudgmentError([{ message: `Value is ${valueType}, expected string`, path: '' }]);
       }
 
       try {

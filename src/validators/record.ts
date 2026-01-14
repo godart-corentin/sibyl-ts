@@ -19,9 +19,7 @@ export const record = <K extends PropertyKey, V>(
         value instanceof Date
       ) {
         const valueType = getValueType(value);
-        throw new JudgmentError([
-          { message: `Value is ${valueType}, expected object`, path: '' },
-        ]);
+        throw new JudgmentError([{ message: `Value is ${valueType}, expected object`, path: '' }]);
       }
 
       const { result, issues } = Object.entries(value).reduce<{

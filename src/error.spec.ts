@@ -84,9 +84,7 @@ describe('JudgmentError with paths', () => {
         tags: arr(str()),
       });
 
-      expect(() => validator.judge({ tags: ['valid', 123, 'also valid'] })).toThrow(
-        JudgmentError
-      );
+      expect(() => validator.judge({ tags: ['valid', 123, 'also valid'] })).toThrow(JudgmentError);
       expect(() => validator.judge({ tags: ['valid', 123, 'also valid'] })).toThrow(
         /at path: tags\[1\]/
       );
