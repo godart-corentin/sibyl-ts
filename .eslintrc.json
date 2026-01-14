@@ -18,5 +18,13 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["dist", "lib", "node_modules", "*.config.ts", "*.config.js"]
+  "ignorePatterns": [
+    "dist",
+    "lib",
+    "node_modules",
+    "*.config.ts",
+    "*.config.js",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }
