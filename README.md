@@ -402,6 +402,86 @@ enforcerValidator.judge({
 
 ---
 
+#### `partial(objectValidator)`
+
+Creates a validator where all properties of an object are optional.
+
+```typescript
+import { obj, partial, str, num } from 'sibyl-ts';
+
+// Define an enforcer profile
+const enforcerProfileValidator = obj({
+  name: str(),
+  coefficient: num({ min: 100, max: 300 }),
+  division: str(),
+  yearsOfService: num(),
+});
+
+// Make all properties optional for partial updates
+const partialEnforcerValidator = partial(enforcerProfileValidator);
+
+// All fields are now optional
+partialEnforcerValidator.judge({
+  coefficient: 195, // Update only the coefficient
+}); // ✓
+
+partialEnforcerValidator.judge({
+  name: 'Shinya Kogami',
+  division: 'Unit 1',
+}); // ✓ Update name and division
+
+partialEnforcerValidator.judge({}); // ✓ Empty object is valid
+```
+
+**Parameters:**
+
+- `objectValidator` - An object validator created with `obj()`
+
+---
+
+#### `omit(objectValidator, keys)`
+
+Creates a validator that omits specific properties from an object validator.
+
+```typescript
+import { obj, omit, str, num, bool } from 'sibyl-ts';
+
+// Full inspector profile
+const inspectorValidator = obj({
+  name: str(),
+  crimeCoefficient: num({ min: 0, max: 300 }),
+  email: email(),
+  isLatentCriminal: bool(),
+  securityClearance: str(),
+});
+
+// Public profile - omit sensitive fields
+const publicProfileValidator = omit(inspectorValidator, [
+  'crimeCoefficient',
+  'isLatentCriminal',
+  'securityClearance',
+]);
+
+// Only name and email are required
+publicProfileValidator.judge({
+  name: 'Akane Tsunemori',
+  email: 'akane.tsunemori@mwpsb.go.jp',
+}); // ✓
+
+publicProfileValidator.judge({
+  name: 'Akane',
+  email: 'akane@mwpsb.go.jp',
+  crimeCoefficient: 28, // ✗ This field should not be present
+}); // ✗
+```
+
+**Parameters:**
+
+- `objectValidator` - An object validator created with `obj()`
+- `keys` - Array of property names to omit
+
+---
+
 #### `tuple([...validators])`
 
 Fixed-length array (tuple) validation.
