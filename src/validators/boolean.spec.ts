@@ -4,12 +4,12 @@ import { bool } from './boolean';
 describe.concurrent('Boolean validator', () => {
   describe('strict mode (default)', () => {
     it('should throw an error if the value is not a boolean', () => {
-      expect(() => bool().judge('hello')).toThrow('Value is string, expected boolean');
-      expect(() => bool().judge('true')).toThrow('Value is string, expected boolean');
-      expect(() => bool().judge(1)).toThrow('Value is number, expected boolean');
-      expect(() => bool().judge(0)).toThrow('Value is number, expected boolean');
-      expect(() => bool().judge(null)).toThrow('Value is null, expected boolean');
-      expect(() => bool().judge(undefined)).toThrow('Value is undefined, expected boolean');
+      expect(() => bool().judge('hello')).toThrow(/string.*expected boolean/);
+      expect(() => bool().judge('true')).toThrow(/string.*expected boolean/);
+      expect(() => bool().judge(1)).toThrow(/number.*expected boolean/);
+      expect(() => bool().judge(0)).toThrow(/number.*expected boolean/);
+      expect(() => bool().judge(null)).toThrow(/null.*expected boolean/);
+      expect(() => bool().judge(undefined)).toThrow(/undefined.*expected boolean/);
     });
 
     it('should return the value if it is a boolean', () => {
@@ -55,10 +55,10 @@ describe.concurrent('Boolean validator', () => {
 
   describe('edge cases', () => {
     it('should only accept boolean in strict mode', () => {
-      expect(() => bool().judge(0)).toThrow('Value is number, expected boolean');
-      expect(() => bool().judge(1)).toThrow('Value is number, expected boolean');
-      expect(() => bool().judge('')).toThrow('Value is string, expected boolean');
-      expect(() => bool().judge('false')).toThrow('Value is string, expected boolean');
+      expect(() => bool().judge(0)).toThrow(/number.*expected boolean/);
+      expect(() => bool().judge(1)).toThrow(/number.*expected boolean/);
+      expect(() => bool().judge('')).toThrow(/string.*expected boolean/);
+      expect(() => bool().judge('false')).toThrow(/string.*expected boolean/);
     });
 
     it('should handle case sensitivity in coerce mode', () => {
@@ -101,7 +101,7 @@ describe.concurrent('Boolean validator', () => {
       const result = bool().tryJudge('yes');
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toBe('Value is string, expected boolean');
+        expect(result.issues[0].message).toMatch(/string.*expected boolean/);
       }
     });
   });

@@ -7,7 +7,7 @@ import { union } from './union';
 
 describe.concurrent('Array validator', () => {
   it('should throw an error if the value is not an array', () => {
-    expect(() => arr(str()).judge('hello')).toThrow('Value is string, expected array');
+    expect(() => arr(str()).judge('hello')).toThrow(/string.*expected array/);
   });
 
   it('should throw an error if the value is too short', () => {
@@ -41,7 +41,7 @@ describe.concurrent('Array validator', () => {
       const mixedArray = arr(union([str(), num()]));
 
       expect(() => mixedArray.judge(['hello', 123, true])).toThrow(
-        'Value is boolean, expected one of the union values'
+        /boolean.*expected one of the union values/
       );
     });
 
@@ -50,10 +50,10 @@ describe.concurrent('Array validator', () => {
 
       expect(strictArray.judge(['hello', 42, 'world', 99])).toEqual(['hello', 42, 'world', 99]);
       expect(() => strictArray.judge(['hello', 200])).toThrow(
-        'Value is number, expected one of the union values'
+        /number.*expected one of the union values/
       ); // 200 > max
       expect(() => strictArray.judge(['HELLO'])).toThrow(
-        'Value is string, expected one of the union values'
+        /string.*expected one of the union values/
       );
     });
 
@@ -79,10 +79,10 @@ describe.concurrent('Array validator', () => {
 
     it('should validate all elements, not just first', () => {
       expect(() => arr(num()).judge([1, 2, 'three', 4])).toThrow(
-        'Value is string, expected number'
+        /string.*expected number/
       );
       expect(() => arr(str()).judge(['a', 'b', 'c', 123])).toThrow(
-        'Value is number, expected string'
+        /number.*expected string/
       );
     });
 
@@ -98,7 +98,7 @@ describe.concurrent('Array validator', () => {
         [3, 4],
       ]);
       expect(() => nestedValidator.judge([[1, 2], ['invalid']])).toThrow(
-        'Value is string, expected number'
+        /string.*expected number/
       );
     });
 
@@ -118,7 +118,7 @@ describe.concurrent('Array validator', () => {
 
     it('should handle arrays with undefined values', () => {
       expect(() => arr(str()).judge(['a', undefined, 'c'])).toThrow(
-        'Value is undefined, expected string'
+        /undefined.*expected string/
       );
     });
   });

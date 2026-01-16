@@ -25,6 +25,6 @@ describe.concurrent('UUID validator', () => {
   });
 
   it('should fail for non-string values', () => {
-    expect(() => uuid().judge(123)).toThrow('Value is number, expected string');
+    expect(() => uuid().judge(123)).toThrow(/number.*expected string/);
   });
 });

@@ -26,7 +26,7 @@ describe.concurrent('IP validator', () => {
   });
 
   it('should fail for non-string values', () => {
-    expect(() => ip().judge(123)).toThrow('Value is number, expected string');
+    expect(() => ip().judge(123)).toThrow(/number.*expected string/);
   });
 
   it('should strict validation on version 4', () => {

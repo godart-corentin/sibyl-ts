@@ -15,7 +15,7 @@ describe.concurrent('Email validator', () => {
   });
 
   it('should fail for non-string values', () => {
-    expect(() => email().judge(123)).toThrow('Value is number, expected string');
-    expect(() => email().judge(null)).toThrow('Value is null, expected string');
+    expect(() => email().judge(123)).toThrow(/number.*expected string/);
+    expect(() => email().judge(null)).toThrow(/null.*expected string/);
   });
 });

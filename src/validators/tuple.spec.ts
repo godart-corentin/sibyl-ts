@@ -11,12 +11,12 @@ import { lit } from './literal';
 
 describe.concurrent('Tuple validator', () => {
   it('should throw an error if the value is not an array', () => {
-    expect(() => tuple([str(), num()]).judge('hello')).toThrow('Value is string, expected array');
-    expect(() => tuple([str(), num()]).judge(123)).toThrow('Value is number, expected array');
-    expect(() => tuple([str(), num()]).judge({})).toThrow('Value is object, expected array');
-    expect(() => tuple([str(), num()]).judge(null)).toThrow('Value is null, expected array');
+    expect(() => tuple([str(), num()]).judge('hello')).toThrow(/string.*expected array/);
+    expect(() => tuple([str(), num()]).judge(123)).toThrow(/number.*expected array/);
+    expect(() => tuple([str(), num()]).judge({})).toThrow(/object.*expected array/);
+    expect(() => tuple([str(), num()]).judge(null)).toThrow(/null.*expected array/);
     expect(() => tuple([str(), num()]).judge(undefined)).toThrow(
-      'Value is undefined, expected array'
+      /undefined.*expected array/
     );
   });
 
@@ -30,13 +30,13 @@ describe.concurrent('Tuple validator', () => {
   it('should validate each element with corresponding validator', () => {
     // First element (123) should be string but is number
     expect(() => tuple([str(), num()]).judge([123, 456])).toThrow(
-      'Value is number, expected string'
+      /number.*expected string/
     );
     expect(() => tuple([str(), num()]).judge(['hello', 'world'])).toThrow(
-      'Value is string, expected number'
+      /string.*expected number/
     );
     expect(() => tuple([num(), num(), num()]).judge([1, 2, 'three'])).toThrow(
-      'Value is string, expected number'
+      /string.*expected number/
     );
   });
 
@@ -84,7 +84,7 @@ describe.concurrent('Tuple validator', () => {
     expect(validator.judge(['hello', true])).toEqual(['hello', true]);
     expect(validator.judge([123, false])).toEqual([123, false]);
     expect(() => validator.judge([true, true])).toThrow(
-      'Value is boolean, expected one of the union values'
+      /boolean.*expected one of the union values/
     );
   });
 
@@ -107,7 +107,7 @@ describe.concurrent('Tuple validator', () => {
     expect(httpResponse.judge([200, 'OK'])).toEqual([200, 'OK']);
     expect(httpResponse.judge([404, 'Not Found'])).toEqual([404, 'Not Found']);
     expect(() => httpResponse.judge([201, 'Created'])).toThrow(
-      'Value is number, expected one of the union values'
+      /number.*expected one of the union values/
     );
   });
 

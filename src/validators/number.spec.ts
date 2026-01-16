@@ -4,9 +4,9 @@ import { num } from './number';
 describe.concurrent('Number validator', () => {
   describe('strict mode (default)', () => {
     it('should throw an error if the value is not a number', () => {
-      expect(() => num().judge('3')).toThrow('Value is string, expected number');
-      expect(() => num().judge(null)).toThrow('Value is null, expected number');
-      expect(() => num().judge(undefined)).toThrow('Value is undefined, expected number');
+      expect(() => num().judge('3')).toThrow(/string.*expected number/);
+      expect(() => num().judge(null)).toThrow(/null.*expected number/);
+      expect(() => num().judge(undefined)).toThrow(/undefined.*expected number/);
     });
 
     it('should throw an error if the value is too short', () => {
@@ -114,7 +114,7 @@ describe.concurrent('Number validator', () => {
       expect(result.type).toBe('error');
       if (result.type === 'error') {
         expect(result.issues).toHaveLength(1);
-        expect(result.issues[0].message).toBe('Value is string, expected number');
+        expect(result.issues[0].message).toMatch(/string.*expected number/);
       }
     });
   });

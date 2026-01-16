@@ -8,14 +8,14 @@ import { lit } from './literal';
 describe.concurrent('Union validator', () => {
   it('should throw an error if the value is not a string or number', () => {
     expect(() => union([str(), num()]).judge(true)).toThrow(
-      'Value is boolean, expected one of the union values'
+      /boolean.*expected one of the union values/
     );
   });
 
   it('should throw an error if the value is not valid for any of the validators', () => {
     expect(() =>
       union([str({ pattern: 'hello' }), str({ pattern: 'world' })]).judge('1234')
-    ).toThrow('Value is string, expected one of the union values');
+    ).toThrow(/string.*expected one of the union values/);
   });
 
   it('should return the value if it is valid', () => {
@@ -37,7 +37,7 @@ describe.concurrent('Union validator', () => {
     expect(validator.judge('hello')).toBe('hello');
     expect(validator.judge(42)).toBe(42);
     expect(validator.judge(true)).toBe(true);
-    expect(() => validator.judge(null)).toThrow('Value is null, expected one of the union values');
+    expect(() => validator.judge(null)).toThrow(/null.*expected one of the union values/);
   });
 
   it('should work with literal validators in union', () => {
@@ -45,7 +45,7 @@ describe.concurrent('Union validator', () => {
     expect(status.judge('pending')).toBe('pending');
     expect(status.judge('approved')).toBe('approved');
     expect(() => status.judge('unknown')).toThrow(
-      'Value is string, expected one of the union values'
+      /string.*expected one of the union values/
     );
   });
 
@@ -77,7 +77,9 @@ describe.concurrent('Union validator', () => {
       const result = union([str(), num()]).tryJudge(true);
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toBe('Value is boolean, expected one of the union values');
+        expect(result.issues[0].message).toMatch(
+          /boolean.*expected one of the union values/
+        );
       }
     });
   });

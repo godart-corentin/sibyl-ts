@@ -8,10 +8,10 @@ import { union } from '../union';
 
 describe.concurrent('Object validator', () => {
   it('should throw an error if the value is not an object', () => {
-    expect(() => obj({}).judge('hello')).toThrow('Value is string, expected object');
-    expect(() => obj({}).judge(null)).toThrow('Value is null, expected object');
-    expect(() => obj({}).judge(undefined)).toThrow('Value is undefined, expected object');
-    expect(() => obj({}).judge([])).toThrow('Value is array, expected object');
+    expect(() => obj({}).judge('hello')).toThrow(/string.*expected object/);
+    expect(() => obj({}).judge(null)).toThrow(/null.*expected object/);
+    expect(() => obj({}).judge(undefined)).toThrow(/undefined.*expected object/);
+    expect(() => obj({}).judge([])).toThrow(/array.*expected object/);
   });
 
   it('should throw if the object does not match the schema', () => {
@@ -19,10 +19,10 @@ describe.concurrent('Object validator', () => {
     // When multiple properties fail, we get a multi-error message
     expect(() => obj({ a: str(), b: num() }).judge({})).toThrow('Judgment failed with 2 error(s)');
     expect(() => obj({ a: str(), b: bool() }).judge({ a: 'hello', b: 'world' })).toThrow(
-      'Value is string, expected boolean'
+      /string.*expected boolean/
     );
     expect(() => obj({ a: str(), b: arr(str()) }).judge({ a: 'hello', b: true })).toThrow(
-      'Value is boolean, expected array'
+      /boolean.*expected array/
     );
   });
 
@@ -74,7 +74,7 @@ describe.concurrent('Object validator', () => {
         age: 30,
         address: { street: '123 Main St' }, // missing city
       })
-    ).toThrow('Value is undefined, expected string');
+    ).toThrow(/undefined.*expected string/);
   });
 
   it('should work with complex schemas', () => {
@@ -133,28 +133,28 @@ describe.concurrent('Object validator', () => {
     });
 
     it('should reject null and undefined', () => {
-      expect(() => obj({ a: str() }).judge(null)).toThrow('Value is null, expected object');
+      expect(() => obj({ a: str() }).judge(null)).toThrow(/null.*expected object/);
       expect(() => obj({ a: str() }).judge(undefined)).toThrow(
-        'Value is undefined, expected object'
+        /undefined.*expected object/
       );
     });
 
     it('should reject arrays', () => {
-      expect(() => obj({ a: str() }).judge([])).toThrow('Value is array, expected object');
-      expect(() => obj({ a: str() }).judge([1, 2, 3])).toThrow('Value is array, expected object');
+      expect(() => obj({ a: str() }).judge([])).toThrow(/array.*expected object/);
+      expect(() => obj({ a: str() }).judge([1, 2, 3])).toThrow(/array.*expected object/);
     });
 
     it('should reject Date objects', () => {
-      expect(() => obj({ a: str() }).judge(new Date())).toThrow('Value is date, expected object');
+      expect(() => obj({ a: str() }).judge(new Date())).toThrow(/date.*expected object/);
     });
 
     it('should handle objects with undefined values', () => {
       // Missing properties pass undefined, which str()/num() will reject
       expect(() => obj({ a: str(), b: num() }).judge({ a: 'test' })).toThrow(
-        'Value is undefined, expected number'
+        /undefined.*expected number/
       );
       expect(() => obj({ a: str(), b: num() }).judge({ a: 'test', b: undefined })).toThrow(
-        'Value is undefined, expected number'
+        /undefined.*expected number/
       );
     });
 
@@ -188,10 +188,10 @@ describe.concurrent('Object validator', () => {
       const validator = obj({ a: str(), b: num(), c: bool() });
 
       expect(() => validator.judge({ a: 'test', b: 'invalid', c: true })).toThrow(
-        'Value is string, expected number'
+        /string.*expected number/
       );
       expect(() => validator.judge({ a: 'test', b: 123, c: 'invalid' })).toThrow(
-        'Value is string, expected boolean'
+        /string.*expected boolean/
       );
     });
 

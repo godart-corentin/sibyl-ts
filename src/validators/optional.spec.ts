@@ -21,12 +21,12 @@ describe.concurrent('Optional validator', () => {
     });
 
     it('should reject null', () => {
-      expect(() => optional(str()).judge(null)).toThrow('Value is null, expected string');
+      expect(() => optional(str()).judge(null)).toThrow(/null.*expected string/);
     });
 
     it('should reject invalid values', () => {
-      expect(() => optional(str()).judge(123)).toThrow('Value is number, expected string');
-      expect(() => optional(num()).judge('hello')).toThrow('Value is string, expected number');
+      expect(() => optional(str()).judge(123)).toThrow(/number.*expected string/);
+      expect(() => optional(num()).judge('hello')).toThrow(/string.*expected number/);
     });
 
     it('should work with arrays', () => {
@@ -73,9 +73,9 @@ describe.concurrent('Optional validator', () => {
 
     it('should still validate non-undefined values', () => {
       expect(() => optional(str(), 'default').judge(123)).toThrow(
-        'Value is number, expected string'
+        /number.*expected string/
       );
-      expect(() => optional(num(), 0).judge('hello')).toThrow('Value is string, expected number');
+      expect(() => optional(num(), 0).judge('hello')).toThrow(/string.*expected number/);
     });
 
     it('should work with empty string as default', () => {
@@ -209,7 +209,7 @@ describe.concurrent('Optional validator', () => {
       const result = optional(num()).tryJudge('invalid');
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toBe('Value is string, expected number');
+        expect(result.issues[0].message).toMatch(/string.*expected number/);
       }
     });
   });

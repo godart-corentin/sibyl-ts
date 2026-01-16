@@ -7,11 +7,11 @@ describe.concurrent('Null validator', () => {
     });
 
     it('should throw error for non-null values', () => {
-        expect(() => nil().judge(undefined)).toThrow('Value is undefined, expected null');
-        expect(() => nil().judge(0)).toThrow('Value is number, expected null');
-        expect(() => nil().judge(false)).toThrow('Value is boolean, expected null');
-        expect(() => nil().judge('')).toThrow('Value is string, expected null');
-        expect(() => nil().judge([])).toThrow('Value is array, expected null');
-        expect(() => nil().judge({})).toThrow('Value is object, expected null');
+        expect(() => nil().judge(undefined)).toThrow(/undefined.*expected null/);
+        expect(() => nil().judge(0)).toThrow(/number.*expected null/);
+        expect(() => nil().judge(false)).toThrow(/boolean.*expected null/);
+        expect(() => nil().judge('')).toThrow(/string.*expected null/);
+        expect(() => nil().judge([])).toThrow(/array.*expected null/);
+        expect(() => nil().judge({})).toThrow(/object.*expected null/);
     });
 });

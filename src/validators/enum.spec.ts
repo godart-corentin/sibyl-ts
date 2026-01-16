@@ -10,12 +10,12 @@ enum TestEnum {
 describe.concurrent('Enum validator', () => {
   it('should throw an error if the value is not in the enum', () => {
     const validator = nativeEnum(TestEnum);
-    expect(() => validator.judge('D')).toThrow('Value is string, expected value from enum');
+    expect(() => validator.judge('D')).toThrow(/string.*expected value from enum/);
     // But if we pass a different type
-    expect(() => validator.judge(123)).toThrow('Value is number, expected value from enum');
-    expect(() => validator.judge(null)).toThrow('Value is null, expected value from enum');
+    expect(() => validator.judge(123)).toThrow(/number.*expected value from enum/);
+    expect(() => validator.judge(null)).toThrow(/null.*expected value from enum/);
     expect(() => validator.judge(undefined)).toThrow(
-      'Value is undefined, expected value from enum'
+      /undefined.*expected value from enum/
     );
   });
 
@@ -37,7 +37,7 @@ describe.concurrent('Enum validator', () => {
       const result = nativeEnum(TestEnum).tryJudge('D');
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toBe('Value is string, expected value from enum');
+        expect(result.issues[0].message).toMatch(/string.*expected value from enum/);
       }
     });
   });

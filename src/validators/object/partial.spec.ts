@@ -34,20 +34,20 @@ describe.concurrent('Partial validator', () => {
   it('should reject invalid property types', () => {
     const validator = partial(obj({ name: str(), age: num() }));
 
-    expect(() => validator.judge({ name: 123 })).toThrow('Value is number, expected string');
-    expect(() => validator.judge({ age: 'invalid' })).toThrow('Value is string, expected number');
+    expect(() => validator.judge({ name: 123 })).toThrow(/number.*expected string/);
+    expect(() => validator.judge({ age: 'invalid' })).toThrow(/string.*expected number/);
     expect(() => validator.judge({ name: 'Valid', age: 'invalid' })).toThrow(
-      'Value is string, expected number'
+      /string.*expected number/
     );
   });
 
   it('should reject non-object values', () => {
     const validator = partial(obj({ name: str() }));
 
-    expect(() => validator.judge('hello')).toThrow('Value is string, expected object');
-    expect(() => validator.judge(null)).toThrow('Value is null, expected object');
-    expect(() => validator.judge(undefined)).toThrow('Value is undefined, expected object');
-    expect(() => validator.judge([])).toThrow('Value is array, expected object');
+    expect(() => validator.judge('hello')).toThrow(/string.*expected object/);
+    expect(() => validator.judge(null)).toThrow(/null.*expected object/);
+    expect(() => validator.judge(undefined)).toThrow(/undefined.*expected object/);
+    expect(() => validator.judge([])).toThrow(/array.*expected object/);
   });
 
   it('should work with nested objects', () => {

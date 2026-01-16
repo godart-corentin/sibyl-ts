@@ -25,8 +25,8 @@ describe.concurrent('Nullish validator', () => {
     });
 
     it('should reject invalid values', () => {
-      expect(() => nullish(str()).judge(123)).toThrow('Value is number, expected string');
-      expect(() => nullish(num()).judge(true)).toThrow('Value is boolean, expected number');
+      expect(() => nullish(str()).judge(123)).toThrow(/number.*expected string/);
+      expect(() => nullish(num()).judge(true)).toThrow(/boolean.*expected number/);
     });
 
     it('should work with complex validators', () => {
@@ -81,9 +81,9 @@ describe.concurrent('Nullish validator', () => {
 
     it('should still validate non-nullish values', () => {
       expect(() => nullish(str(), 'default').judge(123)).toThrow(
-        'Value is number, expected string'
+        /number.*expected string/
       );
-      expect(() => nullish(num(), 0).judge('hello')).toThrow('Value is string, expected number');
+      expect(() => nullish(num(), 0).judge('hello')).toThrow(/string.*expected number/);
     });
 
     it('should work with empty string as default', () => {

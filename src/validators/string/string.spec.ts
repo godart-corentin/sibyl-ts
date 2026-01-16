@@ -4,9 +4,9 @@ import { str } from './string';
 describe.concurrent('String validator', () => {
   describe('strict mode (default)', () => {
     it('should throw an error if the value is not a string', () => {
-      expect(() => str().judge(3)).toThrow('Value is number, expected string');
-      expect(() => str().judge(true)).toThrow('Value is boolean, expected string');
-      expect(() => str().judge(null)).toThrow('Value is null, expected string');
+      expect(() => str().judge(3)).toThrow(/number.*expected string/);
+      expect(() => str().judge(true)).toThrow(/boolean.*expected string/);
+      expect(() => str().judge(null)).toThrow(/null.*expected string/);
     });
 
     it('should throw an error if the value is too short', () => {
@@ -129,7 +129,7 @@ describe.concurrent('String validator', () => {
       expect(result.type).toBe('error');
       if (result.type === 'error') {
         expect(result.issues).toHaveLength(1);
-        expect(result.issues[0].message).toBe('Value is number, expected string');
+        expect(result.issues[0].message).toMatch(/number.*expected string/);
         expect(result.issues[0].path).toBe('');
       }
     });

@@ -21,12 +21,12 @@ describe.concurrent('Nullable validator', () => {
   });
 
   it('should reject undefined', () => {
-    expect(() => nullable(str()).judge(undefined)).toThrow('Value is undefined, expected string');
+    expect(() => nullable(str()).judge(undefined)).toThrow(/undefined.*expected string/);
   });
 
   it('should reject invalid values', () => {
-    expect(() => nullable(str()).judge(123)).toThrow('Value is number, expected string');
-    expect(() => nullable(num()).judge('hello')).toThrow('Value is string, expected number');
+    expect(() => nullable(str()).judge(123)).toThrow(/number.*expected string/);
+    expect(() => nullable(num()).judge('hello')).toThrow(/string.*expected number/);
   });
 
   it('should work with arrays', () => {

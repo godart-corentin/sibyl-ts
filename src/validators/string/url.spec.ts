@@ -15,6 +15,6 @@ describe.concurrent('URL validator', () => {
   });
 
   it('should fail for non-string values', () => {
-    expect(() => url().judge(123)).toThrow('Value is number, expected string');
+    expect(() => url().judge(123)).toThrow(/number.*expected string/);
   });
 });

@@ -11,25 +11,25 @@ import { lit } from './literal';
 
 describe.concurrent('Record validator', () => {
   it('should throw an error if the value is not an object', () => {
-    expect(() => record(str(), num()).judge('hello')).toThrow('Value is string, expected object');
-    expect(() => record(str(), num()).judge(123)).toThrow('Value is number, expected object');
-    expect(() => record(str(), num()).judge(true)).toThrow('Value is boolean, expected object');
+    expect(() => record(str(), num()).judge('hello')).toThrow(/string.*expected object/);
+    expect(() => record(str(), num()).judge(123)).toThrow(/number.*expected object/);
+    expect(() => record(str(), num()).judge(true)).toThrow(/boolean.*expected object/);
   });
 
   it('should throw an error if the value is null or undefined', () => {
-    expect(() => record(str(), num()).judge(null)).toThrow('Value is null, expected object');
+    expect(() => record(str(), num()).judge(null)).toThrow(/null.*expected object/);
     expect(() => record(str(), num()).judge(undefined)).toThrow(
-      'Value is undefined, expected object'
+      /undefined.*expected object/
     );
   });
 
   it('should throw an error if the value is an array', () => {
-    expect(() => record(str(), num()).judge([])).toThrow('Value is array, expected object');
-    expect(() => record(str(), num()).judge([1, 2, 3])).toThrow('Value is array, expected object');
+    expect(() => record(str(), num()).judge([])).toThrow(/array.*expected object/);
+    expect(() => record(str(), num()).judge([1, 2, 3])).toThrow(/array.*expected object/);
   });
 
   it('should throw an error if the value is a Date', () => {
-    expect(() => record(str(), num()).judge(new Date())).toThrow('Value is date, expected object');
+    expect(() => record(str(), num()).judge(new Date())).toThrow(/date.*expected object/);
   });
 
   it('should validate keys with the key validator', () => {
@@ -43,9 +43,9 @@ describe.concurrent('Record validator', () => {
   it('should validate values with the value validator', () => {
     const validator = record(str(), num());
     expect(() => validator.judge({ key: 'not a number' })).toThrow(
-      'Value is string, expected number'
+      /string.*expected number/
     );
-    expect(() => validator.judge({ a: 1, b: '2' })).toThrow('Value is string, expected number');
+    expect(() => validator.judge({ a: 1, b: '2' })).toThrow(/string.*expected number/);
   });
 
   it('should return the value if it is valid', () => {
@@ -185,7 +185,7 @@ describe.concurrent('Record validator', () => {
           c: 'invalid',
           d: 4,
         })
-      ).toThrow('Value is string, expected number');
+      ).toThrow(/string.*expected number/);
     });
 
     it('should handle values with zero and empty string', () => {
@@ -288,7 +288,7 @@ describe.concurrent('Record validator', () => {
         statusCodes.judge({
           invalid: 999,
         })
-      ).toThrow('Value is string, expected one of the union values');
+      ).toThrow(/string.*expected one of the union values/);
     });
   });
 

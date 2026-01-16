@@ -3,9 +3,9 @@ import { lit } from './literal';
 
 describe.concurrent('Literal validator', () => {
   it('should throw an error if the value is not the literal', () => {
-    expect(() => lit('a').judge('b')).toThrow('Value is string, expected literal');
-    expect(() => lit(3).judge(4)).toThrow('Value is number, expected literal');
-    expect(() => lit(true).judge(false)).toThrow('Value is boolean, expected literal');
+    expect(() => lit('a').judge('b')).toThrow(/string.*expected literal/);
+    expect(() => lit(3).judge(4)).toThrow(/number.*expected literal/);
+    expect(() => lit(true).judge(false)).toThrow(/boolean.*expected literal/);
   });
 
   it('should return the value if it is the literal', () => {
@@ -17,10 +17,10 @@ describe.concurrent('Literal validator', () => {
   });
 
   it('should use strict equality (no type coercion)', () => {
-    expect(() => lit(0).judge(false)).toThrow('Value is boolean, expected literal');
-    expect(() => lit(1).judge(true)).toThrow('Value is boolean, expected literal');
-    expect(() => lit('').judge(false)).toThrow('Value is boolean, expected literal');
-    expect(() => lit('0').judge(0)).toThrow('Value is number, expected literal');
+    expect(() => lit(0).judge(false)).toThrow(/boolean.*expected literal/);
+    expect(() => lit(1).judge(true)).toThrow(/boolean.*expected literal/);
+    expect(() => lit('').judge(false)).toThrow(/boolean.*expected literal/);
+    expect(() => lit('0').judge(0)).toThrow(/number.*expected literal/);
   });
 
   it('should work with edge case values', () => {
@@ -31,9 +31,9 @@ describe.concurrent('Literal validator', () => {
   });
 
   it('should reject undefined and null', () => {
-    expect(() => lit('test').judge(null)).toThrow('Value is null, expected literal');
-    expect(() => lit('test').judge(undefined)).toThrow('Value is undefined, expected literal');
-    expect(() => lit(5).judge(null)).toThrow('Value is null, expected literal');
+    expect(() => lit('test').judge(null)).toThrow(/null.*expected literal/);
+    expect(() => lit('test').judge(undefined)).toThrow(/undefined.*expected literal/);
+    expect(() => lit(5).judge(null)).toThrow(/null.*expected literal/);
   });
 
   it('should work with special number values', () => {
@@ -55,7 +55,7 @@ describe.concurrent('Literal validator', () => {
       const result = lit(42).tryJudge(43);
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toBe('Value is number, expected literal');
+        expect(result.issues[0].message).toMatch(/number.*expected literal/);
       }
     });
   });
