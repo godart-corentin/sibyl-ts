@@ -42,11 +42,9 @@ const deepMerge = (target: unknown, source: unknown): unknown => {
 };
 
 // Helper type to simplify the intersection type for better readability (recursive)
-export type SimplifyDeep<T> = T extends object
-  ? T extends Date | Function | unknown[]
-    ? T
-    : { [K in keyof T]: SimplifyDeep<T[K]> } & {}
-  : T;
+export type SimplifyDeep<T> =
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends Record<string, unknown> ? { [K in keyof T]: SimplifyDeep<T[K]> } & {} : T;
 
 export const intersection = <V extends Validator[]>(
   validators: [...V]
