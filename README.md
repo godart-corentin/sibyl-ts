@@ -635,7 +635,43 @@ previousCoefficientValidator.judge(null); // ✓ No previous record
 previousCoefficientValidator.judge(undefined); // ✗
 ```
 
+
 **Type:** `T | null`
+
+---
+
+#### `undef()`
+
+Explicitly validates `undefined`.
+
+```typescript
+import { undef } from 'sibyl-ts';
+
+const undefValidator = undef();
+undefValidator.judge(undefined); // ✓
+undefValidator.judge(null); // ✗
+undefValidator.judge(false); // ✗
+```
+
+**Type:** `undefined`
+
+---
+
+#### `nil()`
+
+Explicitly validates `null`.
+
+```typescript
+import { nil } from 'sibyl-ts';
+
+const nilValidator = nil();
+nilValidator.judge(null); // ✓
+nilValidator.judge(undefined); // ✗
+nilValidator.judge(false); // ✗
+```
+
+**Type:** `null`
+
 
 ---
 
