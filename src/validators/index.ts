@@ -13,3 +13,4 @@ export * from './record';
 export * from './enum';
 export * from './date';
 export * from './undef';
+export * from './nil';
