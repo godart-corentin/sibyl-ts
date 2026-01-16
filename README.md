@@ -287,6 +287,22 @@ recentDateValidator.judge(new Date('2100-01-01')); // ✗ Before min
 
 ---
 
+#### `unknown()`
+
+Passthrough validator that accepts any value. Useful for data that hasn't been scanned by the Sibyl System yet.
+
+```typescript
+import { unknown } from 'sibyl-ts';
+
+const unscannedEvidenceValidator = unknown();
+unscannedEvidenceValidator.judge('mysterious device'); // ✓
+unscannedEvidenceValidator.judge({ threatLevel: 'unknown' }); // ✓
+```
+
+**Type:** `unknown`
+
+---
+
 ### String Validators
 
 #### `email()`
@@ -635,7 +651,6 @@ previousCoefficientValidator.judge(null); // ✓ No previous record
 previousCoefficientValidator.judge(undefined); // ✗
 ```
 
-
 **Type:** `T | null`
 
 ---
@@ -671,7 +686,6 @@ nilValidator.judge(false); // ✗
 ```
 
 **Type:** `null`
-
 
 ---
 
