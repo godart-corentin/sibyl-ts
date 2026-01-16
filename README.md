@@ -538,6 +538,31 @@ modeValidator.judge('paralyzer'); // ✓
 
 ---
 
+#### `intersection([...validators])`
+
+Intersection type validation (AND logic). Combines multiple validators and deeply merges the results of object validators.
+
+```typescript
+import { intersection, obj, str, num } from 'sibyl-ts';
+
+// Combine multiple object schemas
+const personValidator = obj({ name: str() });
+const employeeValidator = obj({ role: str(), salary: num() });
+
+// Resulting type is flattened: { name: string; role: string; salary: number }
+const employeeProfileValidator = intersection([personValidator, employeeValidator]);
+
+employeeProfileValidator.judge({
+  name: 'Akane Tsunemori',
+  role: 'Inspector',
+  salary: 100000,
+}); // ✓
+```
+
+**Expected input:** Value matching **ALL** validators in the array
+
+---
+
 #### `record(keyValidator, valueValidator)`
 
 Record/dictionary validation.
