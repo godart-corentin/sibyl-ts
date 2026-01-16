@@ -80,9 +80,7 @@ describe.concurrent('Nullish validator', () => {
     });
 
     it('should still validate non-nullish values', () => {
-      expect(() => nullish(str(), 'default').judge(123)).toThrow(
-        /number.*expected string/
-      );
+      expect(() => nullish(str(), 'default').judge(123)).toThrow(/number.*expected string/);
       expect(() => nullish(num(), 0).judge('hello')).toThrow(/string.*expected number/);
     });
 

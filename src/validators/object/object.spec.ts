@@ -134,9 +134,7 @@ describe.concurrent('Object validator', () => {
 
     it('should reject null and undefined', () => {
       expect(() => obj({ a: str() }).judge(null)).toThrow(/null.*expected object/);
-      expect(() => obj({ a: str() }).judge(undefined)).toThrow(
-        /undefined.*expected object/
-      );
+      expect(() => obj({ a: str() }).judge(undefined)).toThrow(/undefined.*expected object/);
     });
 
     it('should reject arrays', () => {

@@ -78,12 +78,8 @@ describe.concurrent('Array validator', () => {
     });
 
     it('should validate all elements, not just first', () => {
-      expect(() => arr(num()).judge([1, 2, 'three', 4])).toThrow(
-        /string.*expected number/
-      );
-      expect(() => arr(str()).judge(['a', 'b', 'c', 123])).toThrow(
-        /number.*expected string/
-      );
+      expect(() => arr(num()).judge([1, 2, 'three', 4])).toThrow(/string.*expected number/);
+      expect(() => arr(str()).judge(['a', 'b', 'c', 123])).toThrow(/number.*expected string/);
     });
 
     it('should work with nested arrays', () => {
@@ -97,9 +93,7 @@ describe.concurrent('Array validator', () => {
         [1, 2],
         [3, 4],
       ]);
-      expect(() => nestedValidator.judge([[1, 2], ['invalid']])).toThrow(
-        /string.*expected number/
-      );
+      expect(() => nestedValidator.judge([[1, 2], ['invalid']])).toThrow(/string.*expected number/);
     });
 
     it('should handle exact length validation', () => {
@@ -117,9 +111,7 @@ describe.concurrent('Array validator', () => {
     });
 
     it('should handle arrays with undefined values', () => {
-      expect(() => arr(str()).judge(['a', undefined, 'c'])).toThrow(
-        /undefined.*expected string/
-      );
+      expect(() => arr(str()).judge(['a', undefined, 'c'])).toThrow(/undefined.*expected string/);
     });
   });
 

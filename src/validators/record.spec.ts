@@ -18,9 +18,7 @@ describe.concurrent('Record validator', () => {
 
   it('should throw an error if the value is null or undefined', () => {
     expect(() => record(str(), num()).judge(null)).toThrow(/null.*expected object/);
-    expect(() => record(str(), num()).judge(undefined)).toThrow(
-      /undefined.*expected object/
-    );
+    expect(() => record(str(), num()).judge(undefined)).toThrow(/undefined.*expected object/);
   });
 
   it('should throw an error if the value is an array', () => {
@@ -42,9 +40,7 @@ describe.concurrent('Record validator', () => {
 
   it('should validate values with the value validator', () => {
     const validator = record(str(), num());
-    expect(() => validator.judge({ key: 'not a number' })).toThrow(
-      /string.*expected number/
-    );
+    expect(() => validator.judge({ key: 'not a number' })).toThrow(/string.*expected number/);
     expect(() => validator.judge({ a: 1, b: '2' })).toThrow(/string.*expected number/);
   });
 

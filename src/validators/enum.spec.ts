@@ -14,9 +14,7 @@ describe.concurrent('Enum validator', () => {
     // But if we pass a different type
     expect(() => validator.judge(123)).toThrow(/number.*expected value from enum/);
     expect(() => validator.judge(null)).toThrow(/null.*expected value from enum/);
-    expect(() => validator.judge(undefined)).toThrow(
-      /undefined.*expected value from enum/
-    );
+    expect(() => validator.judge(undefined)).toThrow(/undefined.*expected value from enum/);
   });
 
   it('should return the value if it is in the enum', () => {

@@ -44,9 +44,7 @@ describe.concurrent('Union validator', () => {
     const status = union([lit('pending'), lit('approved'), lit('rejected')]);
     expect(status.judge('pending')).toBe('pending');
     expect(status.judge('approved')).toBe('approved');
-    expect(() => status.judge('unknown')).toThrow(
-      /string.*expected one of the union values/
-    );
+    expect(() => status.judge('unknown')).toThrow(/string.*expected one of the union values/);
   });
 
   it('should work with coercion in union members', () => {
@@ -77,9 +75,7 @@ describe.concurrent('Union validator', () => {
       const result = union([str(), num()]).tryJudge(true);
       expect(result.type).toBe('error');
       if (result.type === 'error') {
-        expect(result.issues[0].message).toMatch(
-          /boolean.*expected one of the union values/
-        );
+        expect(result.issues[0].message).toMatch(/boolean.*expected one of the union values/);
       }
     });
   });

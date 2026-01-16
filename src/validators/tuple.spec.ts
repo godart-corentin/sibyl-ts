@@ -15,9 +15,7 @@ describe.concurrent('Tuple validator', () => {
     expect(() => tuple([str(), num()]).judge(123)).toThrow(/number.*expected array/);
     expect(() => tuple([str(), num()]).judge({})).toThrow(/object.*expected array/);
     expect(() => tuple([str(), num()]).judge(null)).toThrow(/null.*expected array/);
-    expect(() => tuple([str(), num()]).judge(undefined)).toThrow(
-      /undefined.*expected array/
-    );
+    expect(() => tuple([str(), num()]).judge(undefined)).toThrow(/undefined.*expected array/);
   });
 
   it('should throw an error if length does not match', () => {
@@ -29,9 +27,7 @@ describe.concurrent('Tuple validator', () => {
 
   it('should validate each element with corresponding validator', () => {
     // First element (123) should be string but is number
-    expect(() => tuple([str(), num()]).judge([123, 456])).toThrow(
-      /number.*expected string/
-    );
+    expect(() => tuple([str(), num()]).judge([123, 456])).toThrow(/number.*expected string/);
     expect(() => tuple([str(), num()]).judge(['hello', 'world'])).toThrow(
       /string.*expected number/
     );

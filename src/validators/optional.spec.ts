@@ -72,9 +72,7 @@ describe.concurrent('Optional validator', () => {
     });
 
     it('should still validate non-undefined values', () => {
-      expect(() => optional(str(), 'default').judge(123)).toThrow(
-        /number.*expected string/
-      );
+      expect(() => optional(str(), 'default').judge(123)).toThrow(/number.*expected string/);
       expect(() => optional(num(), 0).judge('hello')).toThrow(/string.*expected number/);
     });
 
